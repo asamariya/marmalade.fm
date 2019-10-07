@@ -15,7 +15,7 @@ class App extends Component {
 		this.player = React.createRef();
 	}
 	mountAudio = async () => {
-		const widget = Mixcloud.PlayerWidget(this.player);
+		const widget = Mixcloud.PlayerWidget(this.player.current);
 		await widget.ready;
 		await widget.play();
 		console.log(widget);
