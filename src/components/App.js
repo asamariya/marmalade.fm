@@ -45,6 +45,14 @@ class App extends Component {
 		},
 
 		playMix: mixName => {
+			// If the mixName is the same as the currently playing mix,
+			// we want to pause it instead
+			const {currentMix} = this.state;
+			if (mixName === currentMix) {
+				// When our code sees a return statement, it will
+				// stop running here and exit
+				return this.widget.togglePlay();
+			}
 			// load a new mix by its name and then start playing it immediately
 			this.setState({
 				currentMix: mixName

@@ -10,7 +10,6 @@ const Mix = ({name, ...props}) => (
 			<div className="ph3 pv4 aspect-ratio--object mix-overlay">
 				<div className="flex items-center relative z-2">
 					<h1 className="f4 f3-l mv0 white ttu biryani pr2 lh-title">{name}</h1>
-					{/* PlayButton goes here */}
 					<PlayButton />
 				</div>
 			</div>
