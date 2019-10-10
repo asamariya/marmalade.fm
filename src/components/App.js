@@ -39,18 +39,20 @@ class App extends Component {
 		this.mountAudio();
 	}
 
-	togglePlay = () => {
-		this.widget.togglePlay();
-	};
+	actions = {
+		togglePlay: () => {
+			this.widget.togglePlay();
+		},
 
-	playMix = mixName => {
-		// load a new mix by its name and then start playing it immediately
-		this.setState({
-			currentMix: mixName
-		});
-		this.widget.load(mixName, true);
-		this.mountAudio();
-		// this.widget.togglePlay();
+		playMix: mixName => {
+			// load a new mix by its name and then start playing it immediately
+			this.setState({
+				currentMix: mixName
+			});
+			this.widget.load(mixName, true);
+			this.mountAudio();
+			// this.widget.togglePlay();
+		}
 	};
 
 	render() {
@@ -62,7 +64,9 @@ class App extends Component {
 						<div className="w-50-l relative z-1">
 							<Header />
 							{/* Routed page */}
-							<Route exact path="/" component={Home} />
+							{/* // Here we pass our state and actions don into the 
+							home component so that we can use them */}
+							<Route exact path="/" component={() => <Home {...this.state} {...this.actions} />} />
 							<Route path="/archive" component={Archive} />
 							<Route exact path="/about" component={About} />
 						</div>
