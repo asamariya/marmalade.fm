@@ -8,16 +8,31 @@ import Home from './Home';
 
 const Archive = () => <h1>Archive</h1>;
 const About = () => <h1>About</h1>;
+const MixCloudApiUrl = 'https://api.mixcloud.com';
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			playing: false,
-			currentMix: ''
+			currentMix: '',
+			mix: null
 		};
 		this.player = React.createRef();
 	}
+
+	fetchMixes = async () => {
+		try {
+			// always remember await when using fetch in an async function
+			const response = await fetch(`${MixCloudApiUrl}/james_j6/deep-tech-j-six/`);
+			const data = await response.json();
+			this.setState({
+				mix: data
+			});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	mountAudio = async () => {
 		// when we use the this keyword, our widget is now accessible
 		// anywhere inside the component. This refers to the App component
@@ -37,6 +52,7 @@ class App extends Component {
 
 	componentDidMount() {
 		this.mountAudio();
+		this.fetchMixes();
 	}
 
 	actions = {
