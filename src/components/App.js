@@ -4,14 +4,18 @@ import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FeaturedMix from './FeaturedMix';
 import Header from './Header';
+import Home from './Home';
 
-const Home = () => <h1>Home</h1>;
 const Archive = () => <h1>Archive</h1>;
 const About = () => <h1>About</h1>;
 
 class App extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			playing: false,
+			currentMix: ''
+		};
 		this.player = React.createRef();
 	}
 	mountAudio = async () => {
@@ -19,6 +23,16 @@ class App extends Component {
 		// anywhere inside the component. This refers to the App component
 		this.widget = Mixcloud.PlayerWidget(this.player.current);
 		await this.widget.ready;
+		this.widget.events.pause.on(() =>
+			this.setState({
+				playing: false
+			})
+		);
+		this.widget.events.play.on(() =>
+			this.setState({
+				playing: true
+			})
+		);
 	};
 
 	componentDidMount() {
@@ -31,8 +45,12 @@ class App extends Component {
 
 	playMix = mixName => {
 		// load a new mix by its name and then start playing it immediately
-		console.log(mixName);
+		this.setState({
+			currentMix: mixName
+		});
 		this.widget.load(mixName, true);
+		this.mountAudio();
+		// this.widget.togglePlay();
 	};
 
 	render() {
@@ -44,14 +62,6 @@ class App extends Component {
 						<div className="w-50-l relative z-1">
 							<Header />
 							{/* Routed page */}
-							<div>
-								<button onClick={this.togglePlay}>Play/Pause</button>
-							</div>
-							<div>
-								<button onClick={() => this.playMix('/NTSRadio/jon-hopkins-2nd-may-2018/')}>
-									Play mix
-								</button>
-							</div>
 							<Route exact path="/" component={Home} />
 							<Route path="/archive" component={Archive} />
 							<Route exact path="/about" component={About} />
