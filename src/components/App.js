@@ -15,15 +15,19 @@ class App extends Component {
 		this.player = React.createRef();
 	}
 	mountAudio = async () => {
-		const widget = Mixcloud.PlayerWidget(this.player.current);
-		await widget.ready;
-		await widget.play();
-		console.log(widget);
+		// when we use the this keyword, our widget is now accessible
+		// anywhere inside the component. This refers to the App component
+		this.widget = Mixcloud.PlayerWidget(this.player.current);
+		await this.widget.ready;
 	};
 
 	componentDidMount() {
 		this.mountAudio();
 	}
+
+	togglePlay = () => {
+		this.widget.togglePlay();
+	};
 	render() {
 		return (
 			<Router>
@@ -33,6 +37,9 @@ class App extends Component {
 						<div className="w-50-l relative z-1">
 							<Header />
 							{/* Routed page */}
+							<div>
+								<button onClick={this.togglePlay}>Play/Pause</button>
+							</div>
 							<Route exact path="/" component={Home} />
 							<Route path="/archive" component={Archive} />
 							<Route exact path="/about" component={About} />
