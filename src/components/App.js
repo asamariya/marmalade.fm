@@ -5,10 +5,11 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import FeaturedMix from './FeaturedMix';
 import Header from './Header';
 import Home from './Home';
+import mixesData from '../data/mixes';
 
 const Archive = () => <h1>Archive</h1>;
 const About = () => <h1>About</h1>;
-const MixCloudApiUrl = 'https://api.mixcloud.com';
+// const MixCloudApiUrl = 'https://api.mixcloud.com';
 
 class App extends Component {
 	constructor(props) {
@@ -16,22 +17,28 @@ class App extends Component {
 		this.state = {
 			playing: false,
 			currentMix: '',
-			mix: null
+			mix: null,
+			mixIds: mixesData,
+			mixes: []
 		};
 		this.player = React.createRef();
 	}
 
 	fetchMixes = async () => {
-		try {
-			// always remember await when using fetch in an async function
-			const response = await fetch(`${MixCloudApiUrl}/james_j6/deep-tech-j-six/`);
-			const data = await response.json();
-			this.setState({
-				mix: data
-			});
-		} catch (error) {
-			console.log(error);
-		}
+		const {mixIds} = this.state;
+
+		mixIds.map(async id => {
+			try {
+				// always remember await when using fetch in an async function
+				const response = await fetch(`https://api.mixcloud.com${id}`);
+				const data = await response.json();
+				this.setState((prevState, props) => ({
+					mixes: [...prevState.mixes, data]
+				}));
+			} catch (error) {
+				console.log(error);
+			}
+		});
 	};
 	mountAudio = async () => {
 		// when we use the this keyword, our widget is now accessible
@@ -69,13 +76,13 @@ class App extends Component {
 				// stop running here and exit
 				return this.widget.togglePlay();
 			}
-			// load a new mix by its name and then start playing it immediately
 			this.setState({
 				currentMix: mixName
 			});
+			// load a new mix by its name and start playing immediately, but it doesn't always
+			// work, with chrome's new security updates
 			this.widget.load(mixName, true);
 			this.mountAudio();
-			// this.widget.togglePlay();
 		}
 	};
 
