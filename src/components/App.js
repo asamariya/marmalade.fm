@@ -87,11 +87,15 @@ class App extends Component {
 	};
 
 	render() {
+		// This makes a variable from our first mix in the array
+		// It's the same as salling const firstMix = this.state.mixes[0]
+		// If the array is empty, we assign it a default value of {} which is an empty object
+		const [firstMix = {}] = this.state.mixes;
 		return (
 			<Router>
 				<div>
 					<div className="flex-l justify-end">
-						<FeaturedMix />
+						<FeaturedMix {...this.state} {...this.actions} {...firstMix} id={firstMix.key} />
 						<div className="w-50-l relative z-1">
 							<Header />
 							{/* Routed page */}
