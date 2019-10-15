@@ -6,8 +6,8 @@ import FeaturedMix from './FeaturedMix';
 import Header from './Header';
 import Home from './Home';
 import mixesData from '../data/mixes';
+import Archive from './Archive';
 
-const Archive = () => <h1>Archive</h1>;
 const About = () => <h1>About</h1>;
 // const MixCloudApiUrl = 'https://api.mixcloud.com';
 
@@ -101,8 +101,8 @@ class App extends Component {
 							{/* Routed page */}
 							{/* // Here we pass our state and actions don into the 
 							home component so that we can use them */}
-							<Route exact path="/" component={() => <Home {...this.state} {...this.actions} />} />
-							<Route path="/archive" component={Archive} />
+							<Route exact path="/" render={() => <Home {...this.state} {...this.actions} />} />
+							<Route path="/archive" render={() => <Archive {...this.state} {...this.actions} />} />
 							<Route exact path="/about" component={About} />
 						</div>
 					</div>
