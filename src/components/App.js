@@ -7,8 +7,8 @@ import Header from './Header';
 import Home from './Home';
 import mixesData from '../data/mixes';
 import Archive from './Archive';
+import About from './About';
 
-const About = () => <h1>About</h1>;
 // const MixCloudApiUrl = 'https://api.mixcloud.com';
 
 class App extends Component {
@@ -103,7 +103,11 @@ class App extends Component {
 							home component so that we can use them */}
 							<Route exact path="/" render={() => <Home {...this.state} {...this.actions} />} />
 							<Route path="/archive" render={() => <Archive {...this.state} {...this.actions} />} />
-							<Route exact path="/about" component={About} />
+							<Route
+								exact
+								path="/about"
+								render={() => <About {...this.state} {...this.actions} />}
+							/>
 						</div>
 					</div>
 
