@@ -88,7 +88,7 @@ class App extends Component {
 
 	render() {
 		// This makes a variable from our first mix in the array
-		// It's the same as salling const firstMix = this.state.mixes[0]
+		// It's the same as saying const firstMix = this.state.mixes[0]
 		// If the array is empty, we assign it a default value of {} which is an empty object
 		const [firstMix = {}] = this.state.mixes;
 		return (
