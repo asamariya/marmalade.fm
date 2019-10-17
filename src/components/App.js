@@ -110,7 +110,7 @@ class App extends Component {
 								render={() => <About {...this.state} {...this.actions} />}
 							/>
 							<Route
-								path="/show/:id"
+								path="/show/:slug"
 								// here we pass in the route params so that we can access
 								// the url of the current show page
 								render={routeParams => <Show {...routeParams} {...this.state} />}
