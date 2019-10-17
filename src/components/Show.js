@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Stat from './Stat';
 
-import differenceInDays from 'date-fns/differenceInDays';
+import differenceInDays from 'date-fns/difference_in_days';
 
 class Show extends Component {
 	render() {
