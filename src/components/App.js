@@ -8,6 +8,7 @@ import Home from './Home';
 import mixesData from '../data/mixes';
 import Archive from './Archive';
 import About from './About';
+import Show from './Show';
 
 // const MixCloudApiUrl = 'https://api.mixcloud.com';
 
@@ -107,6 +108,12 @@ class App extends Component {
 								exact
 								path="/about"
 								render={() => <About {...this.state} {...this.actions} />}
+							/>
+							<Route
+								path="/show/:slug"
+								// here we pass in the route params so that we can access
+								// the url of the current show page
+								render={routeParams => <Show {...routeParams} {...this.state} />}
 							/>
 						</div>
 					</div>
