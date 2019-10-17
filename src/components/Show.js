@@ -7,7 +7,6 @@ class Show extends Component {
 	render() {
 		const {match, mixes} = this.props;
 		const [mix = {}] = mixes.filter(mix => mix.slug === match.params.slug);
-		console.log(mix);
 
 		return (
 			<div className="ph3 ph4-l pad-bottom">
