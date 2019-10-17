@@ -4,7 +4,7 @@ class Show extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mix: null
+			mix: {}
 		};
 	}
 
@@ -16,18 +16,22 @@ class Show extends Component {
 		const {mixes} = nextProps;
 
 		// here we grab the mix that has a slug that matches our params frm the url
-		const [firstMix = {}] = mixes.filter(mix => mix.slug === match.params.slug);
-		this.setState({
-			mix: firstMix
-		});
+		const [firstMix] = mixes.filter(mix => mix.slug === match.params.slug);
+		if (firstMix) {
+			this.setState({
+				mix: firstMix
+			});
+		}
 	}
 
 	render() {
 		const {match} = this.props;
+		const {mix = {}} = this.state;
 		return (
-			<div>
-				<h1>Show Page</h1>
-				<p>{match.params.slug}</p>
+			<div className="ph3 ph4-l pad-bottom">
+				<div className="measure center lh-copy">
+					<p>{mix.description}</p>
+				</div>
 			</div>
 		);
 	}
