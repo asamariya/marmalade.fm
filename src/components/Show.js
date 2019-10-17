@@ -1,36 +1,25 @@
 import React, {Component} from 'react';
+import Stat from './Stat';
+
+import differenceInDays from 'date-fns/differenceInDays';
 
 class Show extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			mix: {}
-		};
-	}
-
-	// componentWillReceiveProps runs every time our component gets some new props, rather than
-	// just once like componentDidMount, meaning we can get and update the
-	// props every time some new ones come in
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const {match} = this.props;
-		const {mixes} = nextProps;
-
-		// here we grab the mix that has a slug that matches our params frm the url
-		const [firstMix] = mixes.filter(mix => mix.slug === match.params.slug);
-		if (firstMix) {
-			this.setState({
-				mix: firstMix
-			});
-		}
-	}
-
 	render() {
-		const {match} = this.props;
-		const {mix = {}} = this.state;
+		const {match, mixes} = this.props;
+		const [mix = {}] = mixes.filter(mix => mix.slug === match.params.slug);
+		console.log(mix);
+
 		return (
 			<div className="ph3 ph4-l pad-bottom">
 				<div className="measure center lh-copy">
 					<p>{mix.description}</p>
+					<Stat statName="plays" statNumber={mix.play_count} statWord="times" />
+					<Stat
+						statName="uploaded"
+						statNumber={differenceInDays(new Date(), mix.created_time)}
+						statWord="days ago"
+					/>
+					<Stat statName="lasting for" statNumber={mix.audio_length / 60} statWord="minutes" />
 				</div>
 			</div>
 		);
