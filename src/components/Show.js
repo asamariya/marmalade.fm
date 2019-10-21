@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 
 import Stat from './Stat';
