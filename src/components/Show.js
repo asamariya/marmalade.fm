@@ -1,5 +1,7 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+
 import Stat from './Stat';
 
 import differenceInDays from 'date-fns/difference_in_days';
@@ -23,27 +25,30 @@ const Tags = ({tags = []}) => (
 	</div>
 );
 
-class Show extends Component {
-	render() {
-		const {match, mixes} = this.props;
-		const [mix = {}] = mixes.filter(mix => mix.slug === match.params.slug);
+const Show = ({mix}) => (
+	<div className="ph3 ph4-l pad-bottom">
+		<div className="measure center lh-copy">
+			<Tags tags={mix.tags} />
+			<p>{mix.description}</p>
+			<Stat statName="plays" statNumber={mix.play_count} statWord="times" />
+			<Stat
+				statName="uploaded"
+				statNumber={differenceInDays(new Date(), mix.created_time)}
+				statWord="days ago"
+			/>
+			<Stat statName="lasting for" statNumber={mix.audio_length / 60} statWord="minutes" />
+		</div>
+	</div>
+);
 
-		return (
-			<div className="ph3 ph4-l pad-bottom">
-				<div className="measure center lh-copy">
-					<Tags tags={mix.tags} />
-					<p>{mix.description}</p>
-					<Stat statName="plays" statNumber={mix.play_count} statWord="times" />
-					<Stat
-						statName="uploaded"
-						statNumber={differenceInDays(new Date(), mix.created_time)}
-						statWord="days ago"
-					/>
-					<Stat statName="lasting for" statNumber={mix.audio_length / 60} statWord="minutes" />
-				</div>
-			</div>
-		);
-	}
-}
+// this is what we call a selector, it grabs a certain
+// piece of data from our state
+const getMix = (mixes, slug) => {
+	// here we grab the mix that has a slug that matches our params from the url
+	const [mix = {}] = mixes.filter(mix => mix.slug === slug);
+	return mix;
+};
 
-export default Show;
+export default connect((state, props) => ({
+	mix: getMix(state.mixes, props.match.params.slug)
+}))(Show);

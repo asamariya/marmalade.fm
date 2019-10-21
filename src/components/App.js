@@ -107,12 +107,7 @@ class App extends Component {
 							<Route exact path="/" component={Home} />
 							<Route path="/archive" component={Archive} />
 							<Route path="/about" component={About} />
-							<Route
-								path="/show/:slug"
-								// here we pass in the route params so that we can access
-								// the url of the current show page
-								render={routeParams => <Show {...routeParams} {...this.state} />}
-							/>
+							<Route path="/show/:slug" component={Show} />
 						</div>
 					</div>
 
