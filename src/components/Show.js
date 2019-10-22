@@ -30,13 +30,13 @@ const Show = ({mix}) => (
 		<div className="measure center lh-copy">
 			<Tags tags={mix.tags} />
 			<p>{mix.description}</p>
-			<Stat statName="plays" statNumber={mix.play_count} statWord="times" />
+			<Stat statName="plays" statNumber={mix.play_count || 0} statWord="times" />
 			<Stat
 				statName="uploaded"
-				statNumber={differenceInDays(new Date(), mix.created_time)}
+				statNumber={differenceInDays(new Date(), mix.created_time || 0)}
 				statWord="days ago"
 			/>
-			<Stat statName="lasting for" statNumber={mix.audio_length / 60} statWord="minutes" />
+			<Stat statName="lasting for" statNumber={mix.audio_length / 60 || 0} statWord="minutes" />
 		</div>
 	</div>
 );
