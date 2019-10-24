@@ -4,7 +4,7 @@ import Stat from './Stat';
 
 const playCount = mixes => mixes.reduce((accum, current) => accum + current.play_count, 0);
 const timeCount = mixes => mixes.reduce((accum, current) => accum + current.audio_length, 0);
-debugger;
+
 const About = ({mixes, currentMix, setMix}) => (
 	<div className="pad-bottom ph3 ph4-l">
 		<div className="measure center 1h-copy">
