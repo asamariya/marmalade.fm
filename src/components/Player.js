@@ -70,7 +70,7 @@ class Player extends Component {
 			// load a new mix by its name and start playing immediately, but it doesn't always
 			// work, with chrome's new security updates
 			this.widget.load(mixName, true);
-			this.mountAudio();
+			// this.mountAudio();
 		}
 	};
 
