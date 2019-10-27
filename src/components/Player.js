@@ -15,17 +15,18 @@ class Player extends Component {
 		}
 	}
 	mountAudio = async () => {
+		const {playMix} = this.props;
 		// when we use the this keyword, our widget is now accessible
 		// anywhere inside the component. This refers to the App component
 		this.widget = Mixcloud.PlayerWidget(this.player.current);
 		await this.widget.ready;
 		this.widget.events.pause.on(() =>
-			this.setState({
+			playMix({
 				playing: false
 			})
 		);
 		this.widget.events.play.on(() =>
-			this.setState({
+			playMix({
 				playing: true
 			})
 		);

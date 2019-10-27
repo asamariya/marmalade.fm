@@ -1,6 +1,6 @@
 const initialState = {
 	mixes: [],
-	currentMix: 'Groovy disco bangers',
+	currentMix: '',
 	playing: false,
 	fromMixCloud: false
 };
@@ -11,8 +11,9 @@ function mixesApp(state = initialState, action) {
 		case 'PLAY_MIX':
 			return {
 				...state,
-				currentMix: payload.currentMix,
-				fromMixCloud: payload.fromMixCloud
+				// spread our the payload rather than listening them one by one
+				// it stops them overwriting each other
+				...payload
 			};
 		case 'ADD_MIX':
 			return {
