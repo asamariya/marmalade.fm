@@ -5,7 +5,7 @@ import PlayButton from './PlayButton';
 const FeaturedMix = ({name, pictures = {}, ...props}) => (
 	<div
 		className="w-50-l vh-100 flex items-center justify-center cover mix-overlay
-	bg-center bg-featured pad-bottom fixed-l left-0"
+	bg-center pad-bottom fixed-l left-0"
 		style={{backgroundImage: `url(${pictures.extra_large})`}}
 	>
 		<PlayMix {...props}>
