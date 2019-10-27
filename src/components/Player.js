@@ -9,7 +9,7 @@ class Player extends Component {
 		this.player = React.createRef();
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		// when our widget ir not ready, we return and ignore all the actions below
 		if (!nextProps.widgetReady) {
 			return;
