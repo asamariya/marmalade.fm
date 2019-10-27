@@ -10,24 +10,38 @@ class Player extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		// when our widget ir not ready, we return and ignore all the actions below
+		if (!nextProps.widgetReady) {
+			return;
+		}
 		if (nextProps.currentMix !== this.props.currentMix) {
 			this.widget.load(nextProps.currentMix, true);
+			// if the event hasn't come from mixcloud, we want to
+			// toggle the play pause on our audio
+		} else if (!nextProps.fromMixcloud) {
+			this.widget.togglePlay();
 		}
 	}
 	mountAudio = async () => {
-		const {playMix} = this.props;
+		const {playMix, setWidgetReady} = this.props;
 		// when we use the this keyword, our widget is now accessible
 		// anywhere inside the component. This refers to the App component
 		this.widget = Mixcloud.PlayerWidget(this.player.current);
 		await this.widget.ready;
+		// here we set our widget state to be ready in redux so
+		// we can block anything from happening before it's ready
+		setWidgetReady();
+
 		this.widget.events.pause.on(() =>
 			playMix({
-				playing: false
+				playing: false,
+				fromMixcloud: true
 			})
 		);
 		this.widget.events.play.on(() =>
 			playMix({
-				playing: true
+				playing: true,
+				fromMixcloud: true
 			})
 		);
 	};
