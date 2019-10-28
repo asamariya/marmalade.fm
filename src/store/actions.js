@@ -11,10 +11,16 @@ const addMix = payload => ({
 const setWidgetReady = payload => ({
 	type: 'SET_WIDGET_READY',
 	payload
-})
+});
+
+const setFeaturedMix = payload => ({
+	type: 'SET_FEATURED_MIX',
+	payload
+});
 
 export default {
 	setWidgetReady,
 	playMix,
-	addMix
+	addMix,
+	setFeaturedMix
 };

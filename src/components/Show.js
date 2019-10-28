@@ -1,6 +1,8 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
+
+import actions from '../store/actions';
 
 import Stat from './Stat';
 
@@ -25,21 +27,34 @@ const Tags = ({tags = []}) => (
 	</div>
 );
 
-const Show = ({tags, description, play_count, created_time, audio_length}) => (
-	<div className="ph3 ph4-l pad-bottom">
-		<div className="measure center lh-copy">
-			<Tags tags={tags} />
-			<p>{description}</p>
-			<Stat statName="plays" statNumber={play_count || 0} statWord="times" />
-			<Stat
-				statName="uploaded"
-				statNumber={differenceInDays(new Date(), created_time || 0)}
-				statWord="days ago"
-			/>
-			<Stat statName="lasting for" statNumber={audio_length / 60 || 0} statWord="minutes" />
-		</div>
-	</div>
-);
+class Show extends Component {
+	componentDidMount() {
+		// when we mount our show component, we want to set the featuredMix
+		// in our redux state to be the currently viewed mix
+		const {setFeaturedMix, id} = this.props;
+		setFeaturedMix(id);
+	}
+
+	render() {
+		const {tags, description, play_count, created_time, audio_length} = this.props;
+
+		return (
+			<div className="ph3 ph4-l pad-bottom">
+				<div className="measure center lh-copy">
+					<Tags tags={tags} />
+					<p>{description}</p>
+					<Stat statName="plays" statNumber={play_count || 0} statWord="times" />
+					<Stat
+						statName="uploaded"
+						statNumber={differenceInDays(new Date(), created_time || 0)}
+						statWord="days ago"
+					/>
+					<Stat statName="lasting for" statNumber={audio_length / 60 || 0} statWord="minutes" />
+				</div>
+			</div>
+		);
+	}
+}
 
 // this is what we call a selector, it grabs a certain
 // piece of data from our state
@@ -49,6 +64,9 @@ const getMix = (mixes, slug) => {
 	return mix;
 };
 
-export default connect((state, props) => ({
-	...getMix(state.mixes, props.match.params.slug)
-}))(Show);
+export default connect(
+	(state, props) => ({
+		...getMix(state.mixes, props.match.params.slug)
+	}),
+	actions
+)(Show);

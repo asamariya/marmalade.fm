@@ -1,9 +1,10 @@
 const initialState = {
 	mixes: [],
-	currentMix: '',
+	currentMix: null,
 	widgetReady: false,
 	playing: false,
-	fromMixCloud: false
+	fromMixCloud: false,
+	featuredMix: null
 };
 
 function mixesApp(state = initialState, action) {
@@ -27,6 +28,11 @@ function mixesApp(state = initialState, action) {
 			return {
 				...state,
 				widgetReady: true
+			};
+		case 'SET_FEATURED_MIX':
+			return {
+				...state,
+				featuredMix: payload
 			};
 		default:
 			return state;
