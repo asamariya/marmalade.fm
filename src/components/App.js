@@ -40,12 +40,12 @@ class App extends Component {
 		// This makes a variable from our first mix in the array
 		// It's the same as saying const firstMix = this.state.mixes[0]
 		// If the array is empty, we assign it a default value of {} which is an empty object
-		const [firstMix = {}] = this.props.mixes;
+		// const [firstMix = {}] = this.props.mixes;
 		return (
 			<Router>
 				<div>
 					<div className="flex-l justify-end">
-						<FeaturedMix {...this.state} {...this.actions} {...firstMix} id={firstMix.key} />
+						<FeaturedMix />
 						<div className="w-50-l relative z-1">
 							<Header />
 							{/* Routed page */}

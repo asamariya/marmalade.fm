@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import PlayMix from './PlayMix';
 import PlayButton from './PlayButton';
 
@@ -18,4 +19,11 @@ const FeaturedMix = ({name, pictures = {}, ...props}) => (
 	</div>
 );
 
-export default FeaturedMix;
+const getMix = mixes => {
+	const [firstMix = {}] = mixes;
+	return firstMix;
+};
+
+export default connect(state => ({
+	...getMix(state.mixes)
+}))(FeaturedMix);
