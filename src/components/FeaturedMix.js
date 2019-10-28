@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import PlayMix from './PlayMix';
 import PlayButton from './PlayButton';
 
-const FeaturedMix = ({name, pictures = {}, ...props}) => (
+const FeaturedMix = ({name, pictures = {}, title, ...props}) => (
 	<div
 		className="w-50-l vh-100 flex items-center justify-center cover mix-overlay
 	bg-center pad-bottom fixed-l left-0"
@@ -11,7 +11,7 @@ const FeaturedMix = ({name, pictures = {}, ...props}) => (
 	>
 		<PlayMix {...props}>
 			<div className="w-100 tc pa-3 relative z-2">
-				<p className="b biryani f6 white f6 ttu">Featured Mix</p>
+				<p className="b biryani f6 white f6 ttu">{title}</p>
 				<h1 className="mix-title mt0 mb3 anton white ttu">{name}</h1>
 				<PlayButton />
 			</div>
@@ -44,6 +44,17 @@ const getMix = (mixes, stateFeaturedMix, currentMix) => {
 	return featuredMix || firstMix;
 };
 
+const getTitle = state => {
+	if (state.featuredMix) {
+		return 'Currently viewing';
+	} else if (state.currentMix && state.playing) {
+		return 'Currently playing';
+	} else {
+		return 'Featured mix';
+	}
+};
+
 export default connect(state => ({
-	...getMix(state.mixes, state.featuredMix, state.currentMix)
+	...getMix(state.mixes, state.featuredMix, state.currentMix),
+	title: getTitle(state)
 }))(FeaturedMix);
