@@ -4,11 +4,14 @@ import {Link} from 'react-router-dom';
 import PlayMix from './PlayMix';
 import PlayButton from './PlayButton';
 
-const FeaturedMix = ({name, pictures = {}, title, id, slug, ...props}) => (
+const FeaturedMix = ({name, pictures = {}, picture_primary_color, title, id, slug, ...props}) => (
 	<div
 		className="w-50-l vh-100 flex items-center justify-center cover mix-overlay
 	bg-center pad-bottom fixed-l left-0"
-		style={{backgroundImage: `url(${pictures.extra_large})`}}
+		style={{
+			backgroundImage: `url(${pictures.extra_large})`,
+			backgroundColor: `#${picture_primary_color}`
+		}}
 	>
 		<div className="w-100 tc pa-3 relative z-2">
 			<p className="b biryani f6 white f6 ttu">{title}</p>
