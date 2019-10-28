@@ -1,21 +1,23 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import PlayMix from './PlayMix';
 import PlayButton from './PlayButton';
 
-const FeaturedMix = ({name, pictures = {}, title, ...props}) => (
+const FeaturedMix = ({name, pictures = {}, title, id, slug, ...props}) => (
 	<div
 		className="w-50-l vh-100 flex items-center justify-center cover mix-overlay
 	bg-center pad-bottom fixed-l left-0"
 		style={{backgroundImage: `url(${pictures.extra_large})`}}
 	>
-		<PlayMix {...props}>
-			<div className="w-100 tc pa-3 relative z-2">
-				<p className="b biryani f6 white f6 ttu">{title}</p>
-				<h1 className="mix-title mt0 mb3 anton white ttu">{name}</h1>
+		<div className="w-100 tc pa-3 relative z-2">
+			<p className="b biryani f6 white f6 ttu">{title}</p>
+			<h1 className="mix-title mt0 mb3 anton white ttu">{name}</h1>
+			<Link to={`/show/${slug}`} className="absolute absolute--fill z-3" />
+			<PlayMix id={id} className="relative z-5 pointer">
 				<PlayButton />
-			</div>
-		</PlayMix>
+			</PlayMix>
+		</div>
 	</div>
 );
 
