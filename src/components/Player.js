@@ -32,12 +32,15 @@ class Player extends Component {
 		// we can block anything from happening before it's ready
 		setWidgetReady();
 
+		// using the mixcloud widget events, we can detect when our audio
+		// has been paused, set playing state to false
 		this.widget.events.pause.on(() =>
 			playMix({
 				playing: false,
 				fromMixcloud: true
 			})
 		);
+		// audio is playing again, set playing state to true
 		this.widget.events.play.on(() =>
 			playMix({
 				playing: true,
