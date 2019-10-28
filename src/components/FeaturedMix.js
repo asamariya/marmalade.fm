@@ -31,12 +31,17 @@ const getMix = (mixes, stateFeaturedMix, currentMix) => {
 	// 1. If we have a featuredMix in redux, we show that first
 	// 2. If there's a currently playing mix, we show that next
 	// 3. Otherwise we just show the first mix
-	const [featuredMix] = mixes.filter(mix => mix.id === stateFeaturedMix);
 
-	const [playingMix] = mixes.filter(mix => mix.id === currentMix);
+	let featuredMix;
+	if (stateFeaturedMix) {
+		[featuredMix] = mixes.filter(mix => mix.id === stateFeaturedMix);
+	} else {
+		[featuredMix] = mixes.filter(mix => mix.id === currentMix);
+	}
+
 	const [firstMix = {}] = mixes;
 	// return featuredMix if it exists, otherwise return the first mix
-	return playingMix || featuredMix || firstMix;
+	return featuredMix || firstMix;
 };
 
 export default connect(state => ({
